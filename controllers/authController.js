@@ -11,6 +11,14 @@ const signToken = (id) => {
 };
 
 export const register = catchAsync(async (req, res, next) => {
+  // Check if a user with the provided email already exists in the database
+  const userExists = await User.findOne({ email: req.body.email });
+
+  if (userExists) {
+    // If a user with the given username or email exists, return an error message
+    return res.json("User already exists");
+  }
+
   const newUser = await User.create({
     name: req.body.name,
     email: req.body.email,
@@ -20,13 +28,17 @@ export const register = catchAsync(async (req, res, next) => {
 
   const token = signToken(newUser._id);
 
-  res.status(201).json({
-    status: "success",
-    token,
-    data: {
-      user: newUser,
-    },
-  });
+  // Set the JWT token as a cookie in the response
+  res
+    .cookie("token", token)
+    .status(201)
+    .json({
+      status: "success",
+      token,
+      data: {
+        user: newUser,
+      },
+    });
 });
 
 export const login = catchAsync(async (req, res, next) => {
@@ -46,9 +58,14 @@ export const login = catchAsync(async (req, res, next) => {
 
   // If everything ok, send token to client
   const token = signToken(user._id);
-  res.status(200).json({
+
+  // Set the JWT token as a cookie in the response
+  res.cookie("token", token).status(200).json({
     status: "success",
     token,
+    data: {
+      user,
+    },
   });
 });
 

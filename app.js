@@ -45,3 +45,12 @@ app.use((err, req, res, next) => {
 });
 
 export default app;
+
+/*
+
+try to finish rest of course section 
+finish all of the auth stuff
+figure out how to connect to frontend 
+start working on frontend again
+
+*/
