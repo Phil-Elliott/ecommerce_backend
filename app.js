@@ -31,15 +31,13 @@ app.use("/api/v1/orders", orderRouter);
 
 // 404 route
 app.all("*", (req, res, next) => {
-  res.status(404).json({
-    status: "fail",
-    message: `Can't find ${req.originalUrl} on this server!`,
-  });
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-  res.status(err.status || 500).json({
+  res.status(err.statusCode || 500).json({
+    status: err.status,
     error: err.message || "Internal Server Error",
   });
 });
