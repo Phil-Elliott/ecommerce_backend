@@ -4,6 +4,10 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import helmet from "helmet";
+import rateLimit from "express-rate-limit";
+import mongoSanitize from "express-mongo-sanitize";
+import xss from "xss-clean";
+import hpp from "hpp";
 
 import authRouter from "./routes/authRoutes.js";
 import userRouter from "./routes/userRoutes.js";
@@ -14,14 +18,42 @@ dotenv.config({ path: "./config.env" });
 
 const app = express();
 
-// MIDDLEWARES
+// Global middleware
+
+// Development logging
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
-app.use(express.json());
+
+// Rate limiting
+const limiter = rateLimit({
+  max: 100,
+  windowMs: 60 * 60 * 1000,
+  message: "Too many requests from this IP, please try again in an hour!",
+});
+app.use("/api", limiter);
+
+// Body parser
+app.use(express.json({ limit: "10kb" }));
+
+// Data sanitization against NoSQL query injection
+app.use(mongoSanitize());
+
+// Data sanitization against XSS
+app.use(xss());
+
+// Prevent parameter pollution (whitelist specific parameters)
+app.use(
+  hpp({
+    whitelist: [],
+  })
+);
+
+// Set security HTTP headers
+app.use(helmet());
+
 app.use(cookieParser());
 app.use(cors());
-app.use(helmet());
 
 // ROUTES
 app.use("/api/v1/auth", authRouter);

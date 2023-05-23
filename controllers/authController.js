@@ -15,14 +15,16 @@ const signToken = (id) => {
 const createSendToken = (user, statusCode, res) => {
   // Create the JWT token
   const token = signToken(user._id);
-
-  // Set the JWT token as a cookie in the response
-  res.cookie("token", token, {
+  const cookieOptions = {
     expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 60 * 60 * 1000
+      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
     ),
     httpOnly: true,
-  });
+  };
+
+  // Set the JWT token as a cookie in the response
+  if (process.env.NODE_ENV === "production") cookieOptions.secure = true;
+  res.cookie("jwt", token, cookieOptions);
 
   // Remove the password from the output
   user.password = undefined;
@@ -54,19 +56,7 @@ export const register = catchAsync(async (req, res, next) => {
     role: req.body.role,
   });
 
-  const token = signToken(newUser._id);
-
-  // Set the JWT token as a cookie in the response
-  res
-    .cookie("token", token)
-    .status(201)
-    .json({
-      status: "success",
-      token,
-      data: {
-        user: newUser,
-      },
-    });
+  createSendToken(newUser, 201, res);
 });
 
 export const login = catchAsync(async (req, res, next) => {
@@ -85,16 +75,7 @@ export const login = catchAsync(async (req, res, next) => {
   }
 
   // If everything ok, send token to client
-  const token = signToken(user._id);
-
-  // Set the JWT token as a cookie in the response
-  res.cookie("token", token).status(200).json({
-    status: "success",
-    token,
-    data: {
-      user,
-    },
-  });
+  createSendToken(user, 200, res);
 });
 
 export const logout = (req, res) => {
