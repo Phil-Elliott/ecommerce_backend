@@ -60,6 +60,8 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/products", productRouter);
 app.use("/api/v1/orders", orderRouter);
+app.use("/api/v1/cart", cartRouter);
+app.use("/api/v1/wishList", wishListRouter);
 
 // 404 route
 app.all("*", (req, res, next) => {
@@ -77,6 +79,10 @@ app.use((err, req, res, next) => {
 export default app;
 
 /*
+
+1) cart route
+2) wishlist route
+
 
 try to finish rest of course section 
 finish all of the auth stuff
