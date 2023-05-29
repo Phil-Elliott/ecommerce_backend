@@ -1,4 +1,9 @@
 import express from "express";
+import {
+  getAllWishListItems,
+  addToWishList,
+  removeFromWishList,
+} from "../controllers/wishListController.js";
 
 const router = express.Router();
 

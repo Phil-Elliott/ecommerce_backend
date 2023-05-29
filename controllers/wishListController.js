@@ -1,28 +1,33 @@
-import WishList from "../models/WishList";
+import { catchAsync } from "../utils/catchAsync.js";
 
-export const getAllWishListItems = async (req, res) => {
-  // logic to get all wishlist items for a user
-  const wishList = await WishList.findOne({ user: req.user._id });
-  res.json(wishList);
-};
+export const getAllWishListItems = catchAsync(async (req, res, next) => {
+  const userId = req.user.id;
+  const wishListItems = await WishList.find({ userId: userId });
+  res.status(200).json({
+    status: "success",
+    data: {
+      wishListItems,
+    },
+  });
+});
 
-export const addToWishList = async (req, res) => {
-  // logic to add an item to the wishList
-  const wishList = await Wishlist.findOne({ user: req.user._id });
-  const newItem = {
-    product: req.body.productId,
-  };
-  wishList.items.push(newItem);
-  await wishList.save();
-  res.json(wishList);
-};
+export const addToWishList = catchAsync(async (req, res, next) => {
+  const userId = req.user.id;
+  const { productId } = req.body;
+  const newWishListItem = await WishList.create({ userId, productId });
+  res.status(200).json({
+    status: "success",
+    data: {
+      newWishListItem,
+    },
+  });
+});
 
-export const removeFromWishList = async (req, res) => {
-  // logic to remove an item from the wishList
-  const wishList = await Wishlist.findOne({ user: req.user._id });
-  wishList.items = wishList.items.filter(
-    (item) => item.product.toString() !== req.params.id
-  );
-  await wishList.save();
-  res.json(wishList);
-};
+export const removeFromWishList = catchAsync(async (req, res, next) => {
+  const userId = req.user.id;
+  const { productId } = req.body;
+  await WishList.findOneAndDelete({ userId, productId });
+  res.status(200).json({
+    status: "success",
+  });
+});

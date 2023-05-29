@@ -11,8 +11,10 @@ import hpp from "hpp";
 
 import authRouter from "./routes/authRoutes.js";
 import userRouter from "./routes/userRoutes.js";
-import productRouter from "./routes/productRoutes.js";
+import gameRouter from "./routes/gameRoutes.js";
 import orderRouter from "./routes/orderRoutes.js";
+import cartRouter from "./routes/cartRoutes.js";
+import wishListRouter from "./routes/wishListRoutes.js";
 
 dotenv.config({ path: "./config.env" });
 
@@ -58,7 +60,7 @@ app.use(cors());
 // ROUTES
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
-app.use("/api/v1/products", productRouter);
+app.use("/api/v1/games", gameRouter);
 app.use("/api/v1/orders", orderRouter);
 app.use("/api/v1/cart", cartRouter);
 app.use("/api/v1/wishList", wishListRouter);
