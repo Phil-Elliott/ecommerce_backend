@@ -12,6 +12,6 @@ router.use(protect);
 
 router.route("/").get(getAllCartItems);
 router.route("/add").post(addToCart);
-router.route("/remove/:id").delete(removeFromCart);
+router.route("/remove/:gameId").delete(removeFromCart);
 
 export default router;
