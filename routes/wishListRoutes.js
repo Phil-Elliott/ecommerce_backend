@@ -12,6 +12,6 @@ router.use(protect);
 
 router.route("/").get(getAllWishListItems);
 router.route("/add").post(addToWishList);
-router.route("/remove/:id").delete(removeFromWishList);
+router.route("/remove/:gameId").delete(removeFromWishList);
 
 export default router;
