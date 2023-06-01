@@ -39,7 +39,21 @@ const createSendToken = (user, statusCode, res) => {
   });
 };
 
+export const logout = (req, res) => {
+  res.cookie("jwt", "loggedout", {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+  });
+
+  res.status(200).json({ status: "success" });
+};
+
 export const register = catchAsync(async (req, res, next) => {
+  // Check if a user is already logged in and log them out before registering
+  if (req.user) {
+    logout(req, res);
+  }
+
   // Check if a user with the provided email already exists in the database
   const userExists = await User.findOne({ email: req.body.email });
 
@@ -60,6 +74,11 @@ export const register = catchAsync(async (req, res, next) => {
 });
 
 export const login = catchAsync(async (req, res, next) => {
+  // Check if a user is already logged in and log them out before logging in
+  if (req.user) {
+    logout(req, res);
+  }
+
   const { email, password } = req.body;
 
   // Check if email and password exist
@@ -77,15 +96,6 @@ export const login = catchAsync(async (req, res, next) => {
   // If everything ok, send token to client
   createSendToken(user, 200, res);
 });
-
-export const logout = (req, res) => {
-  res.cookie("jwt", "loggedout", {
-    expires: new Date(Date.now() + 10 * 1000),
-    httpOnly: true,
-  });
-
-  res.status(200).json({ status: "success" });
-};
 
 export const protect = catchAsync(async (req, res, next) => {
   let token;

@@ -1,11 +1,12 @@
 import express from "express";
 import {
   getAllUsers,
-  getUserById,
-  updateUser,
-  deleteUser,
+  // getUserById,
+  // updateUser,
+  // deleteUser,
   updateMe,
   deleteMe,
+  getMe,
 } from "../controllers/userController.js";
 import { protect, restrictTo } from "../controllers/authController.js";
 
@@ -13,12 +14,14 @@ const router = express.Router();
 
 router.route("/").get(getAllUsers);
 
-router.route("/:id").get(getUserById).put(updateUser);
-
 router.use(protect);
+
+router.get("/me", getMe);
 
 router.route("/updateMe").patch(updateMe);
 
 router.route("/deleteMe").delete(deleteMe);
 
 export default router;
+
+// router.route("/:id").get(getUserById).put(updateUser);

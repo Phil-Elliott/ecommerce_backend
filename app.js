@@ -29,7 +29,7 @@ if (process.env.NODE_ENV === "development") {
 
 // Rate limiting
 const limiter = rateLimit({
-  max: 100,
+  max: 1000,
   windowMs: 60 * 60 * 1000,
   message: "Too many requests from this IP, please try again in an hour!",
 });
@@ -55,7 +55,14 @@ app.use(
 app.use(helmet());
 
 app.use(cookieParser());
-app.use(cors());
+
+// Enable CORS
+const corsOptions = {
+  origin: "http://localhost:3001",
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 
 // ROUTES
 app.use("/api/v1/auth", authRouter);

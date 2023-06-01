@@ -67,8 +67,8 @@ export const deleteMe = catchAsync(async (req, res, next) => {
   });
 });
 
-export const getUserById = catchAsync(async (req, res, next) => {
-  const user = await User.findById(req.params.id);
+export const getMe = catchAsync(async (req, res, next) => {
+  const user = await User.findById(req.user.id);
 
   if (!user) {
     return next(new AppError("No user found with that ID", 404));
@@ -82,44 +82,59 @@ export const getUserById = catchAsync(async (req, res, next) => {
   });
 });
 
-export const updateUser = catchAsync(async (req, res, next) => {
-  const user = await User.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
+// export const getUserById = catchAsync(async (req, res, next) => {
+//   const user = await User.findById(req.params.id);
 
-  if (!user) {
-    return next(new AppError("No user found with that ID", 404));
-  }
+//   if (!user) {
+//     return next(new AppError("No user found with that ID", 404));
+//   }
 
-  res.status(200).json({
-    status: "success",
-    data: {
-      user,
-    },
-  });
-});
+//   res.status(200).json({
+//     status: "success",
+//     data: {
+//       user,
+//     },
+//   });
+// });
 
-export const deleteUser = catchAsync(async (req, res, next) => {
-  const user = await User.findByIdAndDelete(req.params.id);
+// export const updateUser = catchAsync(async (req, res, next) => {
+//   const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+//     new: true,
+//     runValidators: true,
+//   });
 
-  if (!user) {
-    return next(new AppError("No user found with that ID", 404));
-  }
+//   if (!user) {
+//     return next(new AppError("No user found with that ID", 404));
+//   }
 
-  res.status(204).json({
-    status: "success",
-    data: null,
-  });
-});
+//   res.status(200).json({
+//     status: "success",
+//     data: {
+//       user,
+//     },
+//   });
+// });
 
-export const createUser = catchAsync(async (req, res, next) => {
-  const newUser = await User.create(req.body);
+// export const deleteUser = catchAsync(async (req, res, next) => {
+//   const user = await User.findByIdAndDelete(req.params.id);
 
-  res.status(201).json({
-    status: "success",
-    data: {
-      user: newUser,
-    },
-  });
-});
+//   if (!user) {
+//     return next(new AppError("No user found with that ID", 404));
+//   }
+
+//   res.status(204).json({
+//     status: "success",
+//     data: null,
+//   });
+// });
+
+// export const createUser = catchAsync(async (req, res, next) => {
+//   const newUser = await User.create(req.body);
+
+//   res.status(201).json({
+//     status: "success",
+//     data: {
+//       user: newUser,
+//     },
+//   });
+// });
