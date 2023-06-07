@@ -22,7 +22,7 @@ export const getAllCartItems = catchAsync(async (req, res, next) => {
 
 export const addToCart = catchAsync(async (req, res, next) => {
   const userId = req.user.id;
-  const { gameId, quantity } = req.body;
+  const { gameId, quantity = 1 } = req.body; // Sets quantity to 1 if it is undefined or null
 
   // First try to find an existing Cart for the user
   let cart = await Cart.findOne({ user: userId });
@@ -98,3 +98,37 @@ export const removeFromCart = catchAsync(async (req, res, next) => {
     status: "success",
   });
 });
+
+export const changeQuantity = catchAsync(async (req, res, next) => {
+  const userId = req.user.id;
+  const gameId = req.body.gameId;
+  const quantity = req.body.quantity;
+
+  let cart = await Cart.findOne({ user: userId });
+
+  if (!cart) {
+    return next(new AppError("No cart found for this user", 404));
+  }
+
+  const itemIndex = cart.items.findIndex((item) => {
+    return item.game.toString() === gameId;
+  });
+
+  if (itemIndex === -1) {
+    return next(new AppError("Game not found in cart", 404));
+  }
+
+  // Change the quantity of the item in the cart
+  if (quantity < 1) {
+    return next(new AppError('Quantity must be at least 1', 400));
+  }
+
+  cart.items[itemIndex].quantity = quantity;
+
+  await cart.save();
+
+  res.status(200).json({
+    status: "success",
+  });
+}
+);

@@ -7,7 +7,7 @@ const gameSchema = new mongoose.Schema({
     unique: true,
   },
   image: {
-    type: String,
+    type: [String],
     required: [true, "A game must have an image"],
   },
   price: {
@@ -19,16 +19,16 @@ const gameSchema = new mongoose.Schema({
     required: [true, "A game must have a description"],
   },
   category: {
-    type: String,
+    type: [String],
     required: [true, "A game must have a category"],
   },
   publisher: {
     type: String,
-    required: [true, "A game must have a publisher"],
+    // required: [true, "A game must have a publisher"],
   },
   releaseDate: {
     type: Date,
-    required: [true, "A game must have a release date"],
+    // required: [true, "A game must have a release date"],
   },
   rating: {
     type: Number,
@@ -38,15 +38,15 @@ const gameSchema = new mongoose.Schema({
   },
   playerCount: {
     type: Number,
-    required: [true, "A game must have a player count"],
+    // required: [true, "A game must have a player count"],
   },
   platform: {
     type: String,
-    required: [true, "A game must have a platform"],
+    // required: [true, "A game must have a platform"],
   },
   gameModes: {
     type: [String],
-    required: [true, "A game must have at least one game mode"],
+    // required: [true, "A game must have at least one game mode"],
   },
   createdAt: {
     type: Date,

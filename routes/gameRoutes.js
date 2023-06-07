@@ -7,8 +7,11 @@ import {
   deleteGame,
 } from "../controllers/gameController.js";
 import { protect, restrictTo } from "../controllers/authController.js";
+// import multer from "multer";
 
 const router = express.Router();
+
+// const upload = multer();
 
 router
   .route("/")
