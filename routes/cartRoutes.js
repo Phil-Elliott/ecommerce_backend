@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.use(protect);
 
-router.route("/").get(getAllCartItems).post(changeQuantity);
+router.route("/").get(getAllCartItems).patch(changeQuantity);
 router.route("/add").post(addToCart);
 router.route("/remove/:gameId").delete(removeFromCart);
 

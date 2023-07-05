@@ -89,13 +89,10 @@ export default app;
 
 /*
 
-1) cart route
-2) wishlist route
+1) Create reviews model
+2) Add quantity of games in stock
+3) Have games not show if there are no more in stock
+4) Fix all auth stuff
 
-
-try to finish rest of course section 
-finish all of the auth stuff
-figure out how to connect to frontend 
-start working on frontend again
 
 */
