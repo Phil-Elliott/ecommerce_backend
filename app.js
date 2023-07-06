@@ -15,6 +15,7 @@ import gameRouter from "./routes/gameRoutes.js";
 import orderRouter from "./routes/orderRoutes.js";
 import cartRouter from "./routes/cartRoutes.js";
 import wishListRouter from "./routes/wishListRoutes.js";
+import reviewRouter from "./routes/reviewRoutes.js";
 
 dotenv.config({ path: "./config.env" });
 
@@ -71,6 +72,7 @@ app.use("/api/v1/games", gameRouter);
 app.use("/api/v1/orders", orderRouter);
 app.use("/api/v1/cart", cartRouter);
 app.use("/api/v1/wishList", wishListRouter);
+app.use("/api/v1/reviews", reviewRouter);
 
 // 404 route
 app.all("*", (req, res, next) => {
