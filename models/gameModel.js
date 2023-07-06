@@ -52,6 +52,10 @@ const gameSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  stock: {
+    type: Number,
+    required: [true, "A game must have a stock"],
+  },
 });
 
 const Game = mongoose.model("Game", gameSchema);
