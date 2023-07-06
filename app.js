@@ -93,6 +93,11 @@ export default app;
 2) Add quantity of games in stock
 3) Have games not show if there are no more in stock
 4) Fix all auth stuff
+5) Finish review controller
+    - update review
+    - delete review
+6) Test review controller
+7) Work on order controller and test (maybe watch tutorial for this) and see what needs to be done with stripe
 
 
 */
