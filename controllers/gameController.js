@@ -31,7 +31,10 @@ export const getAllGames = catchAsync(async (req, res, next) => {
     .limitFields()
     .paginate();
 
-  const games = await features.query;
+  let games = await features.query;
+
+  // only show games that are in stock
+  games = games.filter((game) => game.stock > 0);
 
   res.status(200).json({
     status: "success",

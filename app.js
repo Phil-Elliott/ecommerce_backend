@@ -92,7 +92,7 @@ export default app;
 /*
 
 
-2) Add quantity of games in stock (it the database)
+2) Make sure quantity of games on frontend in cart dont exceed stock
 3) Have games not show if there are no more in stock
 4) Fix all auth stuff
 6) Test review controller
