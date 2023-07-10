@@ -1,9 +1,9 @@
 import express from "express";
 import {
   getAllUsers,
-  // getUserById,
-  // updateUser,
-  // deleteUser,
+  getUserById,
+  updateUser,
+  deleteUser,
   updateMe,
   deleteMe,
   getMe,
@@ -22,6 +22,8 @@ router.route("/updateMe").patch(updateMe);
 
 router.route("/deleteMe").delete(deleteMe);
 
-export default router;
+router.use(restrictTo("admin"));
 
-// router.route("/:id").get(getUserById).put(updateUser);
+router.route("/:id").get(getUserById).patch(updateUser).delete(deleteUser);
+
+export default router;
