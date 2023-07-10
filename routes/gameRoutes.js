@@ -27,8 +27,4 @@ router
   .patch(protect, restrictTo("admin"), updateGame)
   .delete(protect, restrictTo("admin"), deleteGame);
 
-// router
-//   .route("/:gameId/reviews")
-//   .post(protect, restrictTo("user"), createReview);
-
 export default router;

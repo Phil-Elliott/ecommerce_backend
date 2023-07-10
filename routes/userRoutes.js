@@ -16,7 +16,7 @@ router.route("/").get(getAllUsers);
 
 router.use(protect);
 
-router.get("/me", getMe);
+router.get("/me", getMe, getUserById);
 
 router.route("/updateMe").patch(updateMe);
 
