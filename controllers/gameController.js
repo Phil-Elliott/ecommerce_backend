@@ -2,16 +2,6 @@ import Game from "../models/gameModel.js";
 import { catchAsync } from "../utils/catchAsync.js";
 import AppError from "../utils/appError.js";
 import APIFeatures from "../utils/apiFeatures.js";
-import cloudinary from "cloudinary";
-import fs from "fs";
-import stream from "stream";
-
-// Configuration
-// cloudinary.config({
-//   cloud_name: "djdxd5akb",
-//   api_key: "266773556796236",
-//   api_secret: "HUhHCzo9bAmt6Qba-8vvOU2tUbY",
-// });
 
 export const createGame = catchAsync(async (req, res, next) => {
   const newGame = await Game.create(req.body);
@@ -46,7 +36,7 @@ export const getAllGames = catchAsync(async (req, res, next) => {
 });
 
 export const getGame = catchAsync(async (req, res, next) => {
-  const game = await Game.findById(req.params.id);
+  const game = await Game.findById(req.params.id).populate("reviews");
 
   if (!game) {
     return next(new AppError("No game found with that ID", 404));

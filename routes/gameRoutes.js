@@ -6,12 +6,15 @@ import {
   updateGame,
   deleteGame,
 } from "../controllers/gameController.js";
+import reviewRouter from "./reviewRoutes.js";
 import { protect, restrictTo } from "../controllers/authController.js";
 // import multer from "multer";
 
 const router = express.Router();
 
 // const upload = multer();
+
+router.use("/:gameId/reviews", reviewRouter);
 
 router
   .route("/")
@@ -23,5 +26,9 @@ router
   .get(getGame)
   .patch(protect, restrictTo("admin"), updateGame)
   .delete(protect, restrictTo("admin"), deleteGame);
+
+// router
+//   .route("/:gameId/reviews")
+//   .post(protect, restrictTo("user"), createReview);
 
 export default router;
