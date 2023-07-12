@@ -43,6 +43,39 @@ reviewSchema.pre(/^find/, function (next) {
   next();
 });
 
+reviewSchema.statics.calcStarRatings = async function (gameId) {
+  const stats = await this.aggregate([
+    {
+      $match: { game: gameId },
+    },
+    {
+      $group: {
+        _id: "$rating",
+        count: { $sum: 1 },
+      },
+    },
+    {
+      $sort: { _id: -1 },
+    },
+  ]);
+
+  console.log(stats);
+
+  // Initialize the starRatings object with zero counts
+  let starRatings = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+
+  if (stats.length > 0) {
+    stats.forEach((stat) => {
+      // Update the count for each rating present in the reviews
+      starRatings[stat._id] = stat.count;
+    });
+  }
+
+  await Game.findByIdAndUpdate(gameId, {
+    starRatings: starRatings,
+  });
+};
+
 reviewSchema.statics.calcAverageRatings = async function (gameId) {
   const stats = await this.aggregate([
     {
@@ -56,8 +89,6 @@ reviewSchema.statics.calcAverageRatings = async function (gameId) {
       },
     },
   ]);
-
-  console.log(stats);
 
   if (stats.length > 0) {
     await Game.findByIdAndUpdate(gameId, {
@@ -73,8 +104,8 @@ reviewSchema.statics.calcAverageRatings = async function (gameId) {
 };
 
 reviewSchema.post("save", function () {
-  // this points to current review
   this.constructor.calcAverageRatings(this.game);
+  this.constructor.calcStarRatings(this.game);
 });
 
 reviewSchema.pre(/^findOneAnd/, async function (next) {
@@ -84,8 +115,16 @@ reviewSchema.pre(/^findOneAnd/, async function (next) {
 
 reviewSchema.post(/^findOneAnd/, async function () {
   await this.r.constructor.calcAverageRatings(this.r.game);
+  await this.r.constructor.calcStarRatings(this.r.game);
+});
+
+reviewSchema.post("remove", function (doc) {
+  doc.constructor.calcAverageRatings(doc.game);
+  doc.constructor.calcStarRatings(doc.game);
 });
 
 const Review = mongoose.model("Review", reviewSchema);
 
 export default Review;
+
+// Fix delete review

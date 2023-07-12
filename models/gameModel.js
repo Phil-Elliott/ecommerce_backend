@@ -62,6 +62,17 @@ const gameSchema = new mongoose.Schema(
       type: Number,
       required: [true, "A game must have a stock"],
     },
+    starRatings: {
+      type: Map,
+      of: Number,
+      default: {
+        5: 0,
+        4: 0,
+        3: 0,
+        2: 0,
+        1: 0,
+      },
+    },
   },
   {
     toJSON: { virtuals: true },
