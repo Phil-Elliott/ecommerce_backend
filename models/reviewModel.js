@@ -23,6 +23,18 @@ const reviewSchema = new mongoose.Schema(
       min: 1,
       max: 5,
     },
+    headline: {
+      type: String,
+      trim: true,
+      maxlength: [
+        100,
+        "A review headline must have less or equal than 100 characters",
+      ],
+      minlength: [
+        3,
+        "A review headline must have more or equal than 3 characters",
+      ],
+    },
     createdAt: {
       type: Date,
       default: Date.now,
