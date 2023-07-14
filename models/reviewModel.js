@@ -16,6 +16,10 @@ const reviewSchema = new mongoose.Schema(
     review: {
       type: String,
       required: [true, "A review must have a review"],
+      minlength: [
+        10,
+        "A review headline must have more or equal than 10 characters",
+      ],
     },
     rating: {
       type: Number,
@@ -30,10 +34,7 @@ const reviewSchema = new mongoose.Schema(
         100,
         "A review headline must have less or equal than 100 characters",
       ],
-      minlength: [
-        3,
-        "A review headline must have more or equal than 3 characters",
-      ],
+      minlength: [3, "A review must have more or equal than 3 characters"],
     },
     createdAt: {
       type: Date,
@@ -120,14 +121,13 @@ reviewSchema.post("save", function () {
   this.constructor.calcStarRatings(this.game);
 });
 
-reviewSchema.pre(/^findOneAnd/, async function (next) {
-  this.r = await this.findOne();
+reviewSchema.post(/^findOneAnd/, async function (doc, next) {
+  // check if doc exists
+  if (doc) {
+    await doc.constructor.calcAverageRatings(doc.game);
+    await doc.constructor.calcStarRatings(doc.game);
+  }
   next();
-});
-
-reviewSchema.post(/^findOneAnd/, async function () {
-  await this.r.constructor.calcAverageRatings(this.r.game);
-  await this.r.constructor.calcStarRatings(this.r.game);
 });
 
 reviewSchema.post("remove", function (doc) {
@@ -139,4 +139,12 @@ const Review = mongoose.model("Review", reviewSchema);
 
 export default Review;
 
-// Fix delete review
+// reviewSchema.pre(/^findOneAnd/, async function (next) {
+//   this.r = await this.findOne();
+//   next();
+// });
+
+// reviewSchema.post(/^findOneAnd/, async function () {
+//   await this.r.constructor.calcAverageRatings(this.r.game);
+//   await this.r.constructor.calcStarRatings(this.r.game);
+// });

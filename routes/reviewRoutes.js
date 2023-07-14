@@ -18,7 +18,7 @@ router
 router
   .route("/:id")
   .get(getReview)
-  .patch(restrictTo("user", "admin"), updateReview)
-  .delete(restrictTo("user", "admin"), deleteReview);
+  .patch(protect, restrictTo("user", "admin"), updateReview)
+  .delete(protect, restrictTo("user", "admin"), deleteReview);
 
 export default router;
