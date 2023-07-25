@@ -35,3 +35,23 @@ export const getReview = factory.getOne(Review);
 export const updateReview = factory.updateOne(Review);
 
 export const deleteReview = factory.deleteOne(Review);
+
+export const getUsersReview = catchAsync(async (req, res, next) => {
+  const review = await Review.findOne({
+    user: req.body.user,
+    game: req.body.game,
+  });
+
+  console.log(review);
+
+  if (!review) {
+    return next(new AppError("You have not reviewed this product", 400));
+  }
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      review,
+    },
+  });
+});
