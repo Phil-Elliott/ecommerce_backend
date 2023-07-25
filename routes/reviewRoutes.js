@@ -17,7 +17,7 @@ router
   .get(getAllReviews)
   .post(protect, restrictTo("user"), createReview);
 
-router.route("/top-reviews").get(getTopReviews);
+router.route("/top-reviews/:gameId").get(getTopReviews);
 
 router.route("/user").get(protect, restrictTo("user"), getUsersReview);
 
