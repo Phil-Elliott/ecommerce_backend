@@ -6,6 +6,7 @@ import {
   updateReview,
   deleteReview,
   getUsersReview,
+  getTopReviews,
 } from "../controllers/reviewController.js";
 import { protect, restrictTo } from "../controllers/authController.js";
 
@@ -15,6 +16,8 @@ router
   .route("/")
   .get(getAllReviews)
   .post(protect, restrictTo("user"), createReview);
+
+router.route("/top-reviews").get(getTopReviews);
 
 router.route("/user").get(protect, restrictTo("user"), getUsersReview);
 
