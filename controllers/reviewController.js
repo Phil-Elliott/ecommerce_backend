@@ -55,3 +55,14 @@ export const getUsersReview = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+export const getTopReviews = catchAsync(async (req, res, next) => {
+  const reviews = await Review.find({}).sort({ helpfulness: -1 }).limit(3);
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      reviews,
+    },
+  });
+});
