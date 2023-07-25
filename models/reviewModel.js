@@ -36,6 +36,18 @@ const reviewSchema = new mongoose.Schema(
       ],
       minlength: [3, "A review must have more or equal than 3 characters"],
     },
+    upVotes: {
+      type: Number,
+      default: 0,
+    },
+    downVotes: {
+      type: Number,
+      default: 0,
+    },
+    recommended: {
+      type: Boolean,
+      default: false,
+    },
     createdAt: {
       type: Date,
       default: Date.now,
