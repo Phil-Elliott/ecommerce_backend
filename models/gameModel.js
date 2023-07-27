@@ -33,7 +33,7 @@ const gameSchema = new mongoose.Schema(
     },
     ratingsAverage: {
       type: Number,
-      default: 4.5,
+      default: 5,
       min: [1, "Rating must be above 1.0"],
       max: [5, "Rating must be below 5.0"],
       set: (val) => Math.round(val * 10) / 10, // 4.666666, 46.6666, 47, 4.7
@@ -80,12 +80,19 @@ const gameSchema = new mongoose.Schema(
   }
 );
 
+gameSchema.methods.calculateReviewsCount = async function () {
+  const Review = mongoose.model("Review"); // Assuming your Review model is named 'Review'
+  const reviewsCount = await Review.countDocuments({ game: this._id });
+  this.ratingsQuantity = reviewsCount;
+  await this.save();
+};
+
 // virtual populate
-gameSchema.virtual("reviews", {
-  ref: "Review",
-  foreignField: "game",
-  localField: "_id",
-});
+// gameSchema.virtual("reviews", {
+//   ref: "Review",
+//   foreignField: "game",
+//   localField: "_id",
+// });
 
 const Game = mongoose.model("Game", gameSchema);
 

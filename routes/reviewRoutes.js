@@ -31,10 +31,12 @@ export default router;
 
 /*
 
-- Also make a top reviews route that returns the top 3 reviews for a game
-- Need to add helpfulness to reviews
-- Also ask if people recommend the product
-- Display stats of that under other stats
+1) Add recommend option to review ui when writing a review
+2) Add helpfulness to review ui when looking at reviews (user can only do once)
+3) Have top reviews get pulled from database
+4) Figure out pagination
+5) Add filters and sort options from database
+6) Add recommended percentage to game stats
 
 
 */

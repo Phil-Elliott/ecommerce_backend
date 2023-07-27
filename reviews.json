@@ -1,0 +1,222 @@
+[
+  {
+    "user": "60b0bccc1c3659a37f322768",
+    "game": "647ecfaee4ae231c139ff69d",
+    "review": "Great classic game controller. Really brings back the old memories.",
+    "rating": 4,
+    "headline": "Nostalgic and Fun",
+    "upVotes": 15,
+    "downVotes": 2,
+    "recommended": true,
+    "createdAt": "2023-03-14T12:36:23.125Z"
+  },
+  {
+    "user": "60b0bccc1c3659a37f322769",
+    "game": "647ecfaee4ae231c139ff69d",
+    "review": "Fantastic! Works exactly as described and feels just like the original.",
+    "rating": 5,
+    "headline": "Just like the Original",
+    "upVotes": 22,
+    "downVotes": 1,
+    "recommended": true,
+    "createdAt": "2023-02-23T17:45:43.231Z"
+  },
+  {
+    "user": "60b0bccc1c3659a37f32276a",
+    "game": "647ecfaee4ae231c139ff69d",
+    "review": "Decent controller, but the joystick feels a bit off compared to the one I used to have.",
+    "rating": 3,
+    "headline": "Decent but Not Perfect",
+    "upVotes": 8,
+    "downVotes": 4,
+    "recommended": false,
+    "createdAt": "2023-04-01T10:27:37.952Z"
+  },
+  {
+    "user": "60b0bccc1c3659a37f32276b",
+    "game": "647ecfaee4ae231c139ff69d",
+    "review": "Good controller. The buttons are responsive and the joystick is durable.",
+    "rating": 4,
+    "headline": "Reliable and Durable",
+    "upVotes": 12,
+    "downVotes": 3,
+    "recommended": true,
+    "createdAt": "2023-04-15T15:38:32.728Z"
+  },
+  {
+    "user": "60b0bccc1c3659a37f32276c",
+    "game": "647ecfaee4ae231c139ff69d",
+    "review": "I love it! The nostalgic feel is unbeatable. This is a must-buy for any retro gaming fan.",
+    "rating": 5,
+    "headline": "Must-Buy for Retro Fans",
+    "upVotes": 30,
+    "downVotes": 0,
+    "recommended": true,
+    "createdAt": "2023-02-05T09:33:12.948Z"
+  },
+  {
+    "user": "60b0bccc1c3659a37f32276d",
+    "game": "647ecfaee4ae231c139ff69d",
+    "review": "The buttons are somewhat sticky and the joystick is not as smooth as the original one.",
+    "rating": 2,
+    "headline": "Some Improvements Needed",
+    "upVotes": 6,
+    "downVotes": 10,
+    "recommended": false,
+    "createdAt": "2023-01-24T15:33:25.986Z"
+  },
+  {
+    "user": "60b0bccc1c3659a37f32276e",
+    "game": "647ecfaee4ae231c139ff69d",
+    "review": "The controller feels sturdy and the buttons are responsive. It's a great replica!",
+    "rating": 4,
+    "headline": "Great Replica",
+    "upVotes": 16,
+    "downVotes": 1,
+    "recommended": true,
+    "createdAt": "2023-05-07T13:57:32.531Z"
+  },
+  {
+    "user": "60b0bccc1c3659a37f32276f",
+    "game": "647ecfaee4ae231c139ff69d",
+    "review": "I had a little bit of trouble connecting it, but once it was connected, it worked perfectly. It's a great trip down memory lane.",
+    "rating": 4,
+    "headline": "A Trip Down Memory Lane",
+    "upVotes": 14,
+    "downVotes": 3,
+    "recommended": true,
+    "createdAt": "2023-02-20T10:47:38.123Z"
+  },
+  {
+    "user": "60b0bccc1c3659a37f322770",
+    "game": "647ecfaee4ae231c139ff69d",
+    "review": "Excellent controller! It works great and feels like the original one. The joystick is also very responsive.",
+    "rating": 5,
+    "headline": "Top-Notch Controller",
+    "upVotes": 24,
+    "downVotes": 0,
+    "recommended": true,
+    "createdAt": "2023-04-10T12:32:11.957Z"
+  },
+  {
+    "user": "60b0bccc1c3659a37f322771",
+    "game": "647ecfaee4ae231c139ff69d",
+    "review": "It's okay. It does its job, but the quality could be improved a bit. The buttons don't feel as good as the original.",
+    "rating": 3,
+    "headline": "Decent, But Could Be Better",
+    "upVotes": 9,
+    "downVotes": 5,
+    "recommended": false,
+    "createdAt": "2023-03-25T16:38:42.333Z"
+  },
+  {
+    "user": "60b0bccc1c3659a37f322772",
+    "game": "647ecfaee4ae231c139ff69d",
+    "review": "Good product. Brings back memories. The buttons and joystick work well.",
+    "rating": 4,
+    "headline": "Solid Controller, Good Memories",
+    "upVotes": 18,
+    "downVotes": 2,
+    "recommended": true,
+    "createdAt": "2023-03-04T17:27:36.435Z"
+  },
+  {
+    "user": "60b0bccc1c3659a37f322773",
+    "game": "647ecfaee4ae231c139ff69d",
+    "review": "Excellent! I'm a huge fan of retro gaming, and this controller really hits the mark.",
+    "rating": 5,
+    "headline": "A Retro Gamer's Dream",
+    "upVotes": 28,
+    "downVotes": 1,
+    "recommended": true,
+    "createdAt": "2023-05-06T13:22:39.625Z"
+  },
+  {
+    "user": "60b0bccc1c3659a37f322774",
+    "game": "647ecfaee4ae231c139ff69d",
+    "review": "Not the best quality, but it does the job. The joystick could be more durable.",
+    "rating": 3,
+    "headline": "Okay, Not Great",
+    "upVotes": 10,
+    "downVotes": 8,
+    "recommended": false,
+    "createdAt": "2023-02-12T12:19:32.931Z"
+  },
+  {
+    "user": "60b0bccc1c3659a37f322775",
+    "game": "647ecfaee4ae231c139ff69d",
+    "review": "Great controller! Feels just like the original. The buttons are responsive and the joystick works perfectly.",
+    "rating": 5,
+    "headline": "Just Like the Original",
+    "upVotes": 23,
+    "downVotes": 0,
+    "recommended": true,
+    "createdAt": "2023-05-01T15:17:21.427Z"
+  },
+  {
+    "user": "60b0bccc1c3659a37f322776",
+    "game": "647ecfaee4ae231c139ff69d",
+    "review": "It's good for the price, but it's not as good as the original. The joystick could be more responsive.",
+    "rating": 3,
+    "headline": "Good for the Price",
+    "upVotes": 12,
+    "downVotes": 6,
+    "recommended": false,
+    "createdAt": "2023-03-30T13:35:41.927Z"
+  },
+  {
+    "user": "60b0bccc1c3659a37f322777",
+    "game": "647ecfaee4ae231c139ff69d",
+    "review": "Good quality. Works well. The buttons and joystick are responsive.",
+    "rating": 4,
+    "headline": "Good Quality and Works Well",
+    "upVotes": 16,
+    "downVotes": 2,
+    "recommended": true,
+    "createdAt": "2023-04-17T15:43:18.213Z"
+  },
+  {
+    "user": "60b0bccc1c3659a37f322778",
+    "game": "647ecfaee4ae231c139ff69d",
+    "review": "It's decent for the price. It doesn't feel as solid as the original, but it works fine for most games.",
+    "rating": 3,
+    "headline": "Decent for the Price",
+    "upVotes": 11,
+    "downVotes": 7,
+    "recommended": false,
+    "createdAt": "2023-02-28T14:37:28.333Z"
+  },
+  {
+    "user": "60b0bccc1c3659a37f322779",
+    "game": "647ecfaee4ae231c139ff69d",
+    "review": "Excellent controller. Very responsive and feels just like the original.",
+    "rating": 5,
+    "headline": "Excellent and Responsive",
+    "upVotes": 26,
+    "downVotes": 1,
+    "recommended": true,
+    "createdAt": "2023-05-09T12:49:33.539Z"
+  },
+  {
+    "user": "60b0bccc1c3659a37f32277a",
+    "game": "647ecfaee4ae231c139ff69d",
+    "review": "The quality is not the best. The joystick is not very responsive and the buttons feel cheap.",
+    "rating": 2,
+    "headline": "Low Quality",
+    "upVotes": 5,
+    "downVotes": 12,
+    "recommended": false,
+    "createdAt": "2023-01-31T17:37:48.739Z"
+  },
+  {
+    "user": "60b0bccc1c3659a37f32277b",
+    "game": "647ecfaee4ae231c139ff69d",
+    "review": "This is a great controller! It feels just like the original and works perfectly with my games.",
+    "rating": 5,
+    "headline": "Perfect for Retro Games",
+    "upVotes": 29,
+    "downVotes": 0,
+    "recommended": true,
+    "createdAt": "2023-03-18T16:42:13.827Z"
+  }
+]

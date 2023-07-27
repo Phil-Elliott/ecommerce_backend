@@ -8,7 +8,7 @@ export const createGame = factory.createOne(Game);
 
 export const getAllGames = factory.getAll(Game);
 
-export const getGame = factory.getOne(Game, { path: "reviews" });
+export const getGame = factory.getOne(Game);
 
 export const updateGame = factory.updateOne(Game);
 

@@ -38,11 +38,9 @@ export const deleteReview = factory.deleteOne(Review);
 
 export const getUsersReview = catchAsync(async (req, res, next) => {
   const review = await Review.findOne({
-    user: req.body.user,
-    game: req.body.game,
+    user: req.query.user,
+    game: req.query.game,
   });
-
-  console.log(review);
 
   if (!review) {
     return next(new AppError("You have not reviewed this product", 400));
@@ -57,7 +55,6 @@ export const getUsersReview = catchAsync(async (req, res, next) => {
 });
 
 export const getTopReviews = catchAsync(async (req, res, next) => {
-  // need to pass the game id in the url
   const reviews = await Review.find({ game: req.params.gameId })
     .sort({
       helpfulness: -1,
