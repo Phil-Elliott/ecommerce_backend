@@ -7,6 +7,7 @@ import {
   deleteReview,
   getUsersReview,
   getTopReviews,
+  voteReview,
 } from "../controllers/reviewController.js";
 import { protect, restrictTo } from "../controllers/authController.js";
 
@@ -20,6 +21,8 @@ router
 router.route("/top-reviews/:gameId").get(getTopReviews);
 
 router.route("/user").get(protect, restrictTo("user"), getUsersReview);
+
+router.route("/:id/vote").patch(protect, restrictTo("user"), voteReview);
 
 router
   .route("/:id")

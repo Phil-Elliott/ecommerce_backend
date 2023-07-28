@@ -57,7 +57,7 @@ export const getUsersReview = catchAsync(async (req, res, next) => {
 export const getTopReviews = catchAsync(async (req, res, next) => {
   const reviews = await Review.find({ game: req.params.gameId })
     .sort({
-      helpfulness: -1,
+      upVotes: -1,
     })
     .limit(3);
 
@@ -65,6 +65,48 @@ export const getTopReviews = catchAsync(async (req, res, next) => {
     status: "success",
     data: {
       reviews,
+    },
+  });
+});
+
+// allows user to upVote or downVote a review, but not both and not more than once per review
+export const voteReview = catchAsync(async (req, res, next) => {
+  const review = await Review.findById(req.params.id);
+
+  if (!review) {
+    return next(new AppError("No review found with that ID", 404));
+  }
+
+  if (req.body.upVote) {
+    if (review.downVotes.includes(req.user.id)) {
+      review.downVotes = review.downVotes.filter(
+        (id) => id.toString() !== req.user.id.toString()
+      );
+    }
+
+    if (!review.upVotes.includes(req.user.id)) {
+      review.upVotes.push(req.user.id);
+    }
+  }
+
+  if (req.body.downVote) {
+    if (review.upVotes.includes(req.user.id)) {
+      review.upVotes = review.upVotes.filter(
+        (id) => id.toString() !== req.user.id.toString()
+      );
+    }
+
+    if (!review.downVotes.includes(req.user.id)) {
+      review.downVotes.push(req.user.id);
+    }
+  }
+
+  await review.save();
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      review,
     },
   });
 });
