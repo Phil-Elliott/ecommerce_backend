@@ -5,6 +5,7 @@ import {
   createGame,
   updateGame,
   deleteGame,
+  getFilterOptions,
 } from "../controllers/gameController.js";
 import reviewRouter from "./reviewRoutes.js";
 import { protect, restrictTo } from "../controllers/authController.js";
@@ -15,6 +16,8 @@ const router = express.Router();
 // const upload = multer();
 
 router.use("/:gameId/reviews", reviewRouter);
+
+router.route("/filterOptions").get(getFilterOptions);
 
 router
   .route("/")

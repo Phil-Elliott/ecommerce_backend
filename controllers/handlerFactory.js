@@ -78,20 +78,52 @@ export function getAll(Model) {
     let filter = {};
     if (req.params.gameId) filter = { game: req.params.gameId };
 
+    // Create a separate query to get the total count of all products
+    const totalProductsQuery = Model.find(filter);
+
     const features = new APIFeatures(Model.find(filter), req.query)
       .filter()
       .sort()
       .limitFields()
       .paginate();
 
-    const docs = await features.query;
+    // Execute both queries in parallel
+    const [docs, totalProducts] = await Promise.all([
+      features.query,
+      totalProductsQuery.countDocuments(),
+    ]);
 
     res.status(200).json({
       status: "success",
       results: docs.length,
+      totalProducts: totalProducts, // Add the total count of all products to the response
       data: {
         data: docs,
       },
     });
   });
 }
+
+// export function getAll(Model) {
+//   return catchAsync(async (req, res, next) => {
+//     // To allow for nested GET reviews on game
+//     let filter = {};
+//     if (req.params.gameId) filter = { game: req.params.gameId };
+
+//     const features = new APIFeatures(Model.find(filter), req.query)
+//       .filter()
+//       .sort()
+//       .limitFields()
+//       .paginate();
+
+//     const docs = await features.query;
+
+//     res.status(200).json({
+//       status: "success",
+//       results: docs.length,
+//       data: {
+//         data: docs,
+//       },
+//     });
+//   });
+// }
