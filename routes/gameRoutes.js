@@ -6,6 +6,7 @@ import {
   updateGame,
   deleteGame,
   getFilterOptions,
+  getRandomProducts,
 } from "../controllers/gameController.js";
 import reviewRouter from "./reviewRoutes.js";
 import { protect, restrictTo } from "../controllers/authController.js";
@@ -18,6 +19,8 @@ const router = express.Router();
 router.use("/:gameId/reviews", reviewRouter);
 
 router.route("/filterOptions").get(getFilterOptions);
+
+router.route("/randomProducts").get(getRandomProducts);
 
 router
   .route("/")

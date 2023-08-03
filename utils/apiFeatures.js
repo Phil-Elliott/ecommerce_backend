@@ -1,25 +1,24 @@
 class APIFeatures {
-  constructor(query, queryString) {
-    this.query = query;
+  constructor(Model, filter, queryString) {
+    this.query = Model.find(filter);
     this.queryString = queryString;
   }
 
-  filter() {
-    // Basic filtering
-    let queryObj = { ...this.queryString };
-    const excludedFields = ["page", "sort", "limit", "fields"];
-    excludedFields.forEach((el) => delete queryObj[el]);
+  // filter() {
+  //   // Basic filtering
+  //   let queryObj = { ...this.queryString };
+  //   const excludedFields = ["page", "sort", "limit", "fields"];
+  //   excludedFields.forEach((el) => delete queryObj[el]);
 
-    // Advanced filtering
-    let queryStr = JSON.stringify(queryObj);
-    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
+  //   // Advanced filtering
+  //   let queryStr = JSON.stringify(queryObj);
+  //   queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
 
-    this.query = this.query.find(JSON.parse(queryStr));
-    return this;
-  }
+  //   this.query = this.query.find(JSON.parse(queryStr));
+  //   return this;
+  // }
 
   sort() {
-    // Sort
     if (this.queryString.sort) {
       const sortBy = this.queryString.sort.split(",").join(" ");
       this.query = this.query.sort(sortBy);
