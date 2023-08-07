@@ -5,11 +5,17 @@ import {
   createOrder,
   updateOrder,
   deleteOrder,
+  getCheckoutSession,
 } from "../controllers/orderController.js";
+import { protect, restrictTo } from "../controllers/authController.js";
 
 const router = express.Router();
 
-router.route("/").get(getAllOrders).post(createOrder);
+router.use(protect);
+
+router.post("/checkout-session", getCheckoutSession);
+
+router.router.route("/").get(getAllOrders).post(createOrder);
 
 router.route("/:id").get(getOrder).put(updateOrder).delete(deleteOrder);
 
