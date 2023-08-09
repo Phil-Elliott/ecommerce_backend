@@ -13,9 +13,9 @@ const router = express.Router();
 
 router.use(protect);
 
-router.post("/checkout-session", getCheckoutSession);
+router.get("/checkout-session", getCheckoutSession);
 
-router.router.route("/").get(getAllOrders).post(createOrder);
+router.route("/").get(getAllOrders).post(createOrder);
 
 router.route("/:id").get(getOrder).put(updateOrder).delete(deleteOrder);
 
