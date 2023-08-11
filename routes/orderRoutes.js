@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.use(protect);
 
-router.get("/checkout-session", getCheckoutSession);
+router.post("/checkout-session", getCheckoutSession);
 
 router.route("/").get(getAllOrders).post(createOrder);
 
