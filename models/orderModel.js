@@ -33,6 +33,13 @@ const orderSchema = new mongoose.Schema({
   },
 });
 
+orderSchema.pre(/^find/, function (next) {
+  this.populate("user").populate({
+    path: "items.product",
+    select: "name description price image",
+  });
+});
+
 const Order = mongoose.model("Order", orderSchema);
 
 export default Order;
