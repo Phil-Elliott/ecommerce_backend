@@ -6,12 +6,15 @@ import {
   updateOrder,
   deleteOrder,
   getCheckoutSession,
+  createOrderCheckout,
 } from "../controllers/orderController.js";
 import { protect, restrictTo } from "../controllers/authController.js";
 
 const router = express.Router();
 
 router.use(protect);
+
+router.post("/create-order-checkout", createOrderCheckout);
 
 router.post("/checkout-session", getCheckoutSession);
 

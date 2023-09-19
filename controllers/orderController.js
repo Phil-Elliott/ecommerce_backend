@@ -48,6 +48,7 @@ export const getCheckoutSession = catchAsync(async (req, res, next) => {
 
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
+    // have the success url go to the orders page
     success_url: `http://localhost:3001/`,
     cancel_url: `http://localhost:3001/cart`,
     customer_email: req.user.email,
@@ -63,6 +64,27 @@ export const getCheckoutSession = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     session,
+  });
+});
+
+export const createOrderCheckout = catchAsync(async (req, res, next) => {
+  const { user, items, total } = req.body;
+
+  if (!user || !items || !total) {
+    return next(new AppError("Missing required fields", 400));
+  }
+
+  const order = await Order.create({
+    user,
+    items,
+    total,
+  });
+
+  res.status(201).json({
+    status: "success",
+    data: {
+      order,
+    },
   });
 });
 
