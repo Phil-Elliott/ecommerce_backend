@@ -8,6 +8,7 @@ import rateLimit from "express-rate-limit";
 import mongoSanitize from "express-mongo-sanitize";
 import xss from "xss-clean";
 import hpp from "hpp";
+import bodyParser from "body-parser";
 
 import authRouter from "./routes/authRoutes.js";
 import userRouter from "./routes/userRoutes.js";
@@ -16,6 +17,8 @@ import orderRouter from "./routes/orderRoutes.js";
 import cartRouter from "./routes/cartRoutes.js";
 import wishListRouter from "./routes/wishListRoutes.js";
 import reviewRouter from "./routes/reviewRoutes.js";
+
+import { handleStripeWebhook } from "./controllers/orderController.js";
 
 dotenv.config({ path: "./config.env" });
 
@@ -35,6 +38,12 @@ const limiter = rateLimit({
   message: "Too many requests from this IP, please try again in an hour!",
 });
 app.use("/api", limiter);
+
+// app.post(
+//   "/webhook",
+//   bodyParser.raw({ type: "application/json" }),
+//   handleStripeWebhook
+// );
 
 // Body parser
 app.use(express.json({ limit: "10kb" }));
