@@ -91,36 +91,17 @@ export const getCheckoutSession = catchAsync(async (req, res, next) => {
   });
 });
 
-const createOrderCheckout = async (session) => {
-  // console.log("session", session);
-  // const order = session.client_reference_id;
-  // console.log(order, "orderID");
-  // const user = (await User.findOne({ email: session.customer_email })).id;
-  // const price = session.display_items[0].amount / 100;
-  // await Order.findByIdAndUpdate(order, { orderStatus: "paid" });
+const createOrderCheckout = async (event) => {
+  const session = event.data.object;
+  const id = new mongoose.Types.ObjectId(session.client_reference_id);
 
-  // Retrieve order's ID from metadata
-  const orderId = session.client_reference_id;
-  console.log(session.display_items, "display items");
-  const id = new mongoose.Types.ObjectId(orderId);
-  console.log("id", id);
-
-  // if (orderId) {
   try {
-    console.log("new order");
-    // const newOrder = await Order.findByIdAndUpdate(
-    //   session.client_reference_id,
-    //   {
-    //     orderStatus: "paid",
-    //   }
-    // );
-    const newOrder = await Order.findById(orderId).exec();
-    console.log("new order 2");
-    console.log("new order 3", newOrder);
+    const newOrder = await Order.findByIdAndUpdate(id, {
+      orderStatus: "paid",
+    });
   } catch (error) {
     console.log("Error fetching order:", error.message);
   }
-  // }
 };
 
 export const handleStripeWebhook = async (req, res, next) => {
@@ -161,7 +142,10 @@ export const createOrder = catchAsync(async (req, res, next) => {
 });
 
 export const getAllOrders = catchAsync(async (req, res, next) => {
+  console.log("get all orders");
   const orders = await Order.find();
+
+  console.log(orders, "orders");
 
   res.status(200).json({
     status: "success",
@@ -217,6 +201,13 @@ export const deleteOrder = catchAsync(async (req, res, next) => {
     data: null,
   });
 });
+
+// console.log("session", session);
+// const order = session.client_reference_id;
+// console.log(order, "orderID");
+// const user = (await User.findOne({ email: session.customer_email })).id;
+// const price = session.display_items[0].amount / 100;
+// await Order.findByIdAndUpdate(order, { orderStatus: "paid" });
 
 // const handleCheckoutSessionCompleted = async (event) => {
 //   const session = event.data.object;

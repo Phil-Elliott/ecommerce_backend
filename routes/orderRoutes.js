@@ -20,8 +20,6 @@ router.post(
   handleStripeWebhook
 );
 
-// could use raw body here instead of express.json
-
 router.use(protect);
 
 // router.post("/create-order-checkout", createOrderCheckout);
