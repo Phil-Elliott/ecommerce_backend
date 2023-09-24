@@ -143,7 +143,18 @@ export const createOrder = catchAsync(async (req, res, next) => {
 
 export const getAllOrders = catchAsync(async (req, res, next) => {
   console.log("get all orders");
-  const orders = await Order.find();
+
+  // Get User Id from Request object, assuming it is set there after authentication
+  const userId = req.user._id;
+
+  const orders = await Order.find({
+    user: userId, // Filtering by user
+    orderStatus: "paid", // Filtering by paid status
+  }).populate({
+    path: "items.product", // Populating the product in each order item
+    model: "Game", // Using the correct 'Game' model
+    select: "name description price image", // Selecting fields to populate
+  });
 
   console.log(orders, "orders");
 

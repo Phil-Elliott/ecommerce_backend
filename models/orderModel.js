@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const orderItemSchema = new mongoose.Schema({
   product: {
     type: mongoose.Schema.ObjectId,
-    ref: "Product",
+    ref: "Game",
     required: [true, "An order item must reference a Product"],
   },
   quantity: {
@@ -39,10 +39,12 @@ const orderSchema = new mongoose.Schema({
 });
 
 // orderSchema.pre(/^find/, function (next) {
-//   this.populate("user").populate({
+//   this.populate({
 //     path: "items.product",
+//     model: "Game", // Adjusting to use 'Game' model
 //     select: "name description price image",
 //   });
+//   next();
 // });
 
 const Order = mongoose.model("Order", orderSchema);
