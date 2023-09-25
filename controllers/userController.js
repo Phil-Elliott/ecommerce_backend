@@ -17,7 +17,6 @@ const filterObj = (obj, ...allowedFields) => {
 export const updateMe = catchAsync(async (req, res, next) => {
   console.log(req.body);
 
-  // 1) Create error if user POSTs password data
   if (req.body.password || req.body.passwordConfirm) {
     return next(
       new AppError(
@@ -27,23 +26,45 @@ export const updateMe = catchAsync(async (req, res, next) => {
     );
   }
 
-  // 2) Filter out unwanted fields names that are not allowed to be updated
+  // Define allowed fields for address
+  const allowedAddressFields = [
+    "streetAddress",
+    "city",
+    "state",
+    "postalCode",
+    "country",
+  ];
+
+  // Extracting and filtering address object from the body
+  let addressObj = {};
+  if (req.body.address) {
+    addressObj = Object.keys(req.body.address)
+      .filter((key) => allowedAddressFields.includes(key))
+      .reduce((obj, key) => {
+        obj[key] = req.body.address[key];
+        return obj;
+      }, {});
+  }
+
+  // Filter out unwanted fields names that are not allowed to be updated
   const filteredBody = filterObj(
     req.body,
     "name",
     "email",
-    "address",
     "avatar",
     "phoneNumber"
   );
 
-  // 3) Update user document
+  // Assigning the filtered address object back to the filtered body
+  if (Object.keys(addressObj).length > 0) filteredBody.address = addressObj;
+
+  // Update user document
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
     new: true,
     runValidators: true,
   });
 
-  // 4) Send response
+  // Send response
   res.status(200).json({
     status: "success",
     data: {
