@@ -31,11 +31,35 @@ const orderSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  orderNumber: {
+    type: String,
+    required: [true, "An order must have an order number"],
+  },
   orderStatus: {
     type: String,
     enum: ["pending", "paid", "shipped", "delivered", "cancelled"],
     default: "pending",
   },
+  shippingStatus: {
+    type: String,
+    enum: ["Processing", "Shipped", "Out for Delivery", "Delivered"],
+    default: "Processing",
+  },
+  trackingNumber: {
+    type: String,
+    default: null,
+  },
+  shippingDetails: {
+    address: String,
+    contactName: String,
+    contactNumber: String,
+  },
+  orderStatusHistory: [
+    {
+      status: String,
+      changedAt: Date,
+    },
+  ],
 });
 
 // orderSchema.pre(/^find/, function (next) {

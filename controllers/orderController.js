@@ -6,6 +6,30 @@ import { catchAsync } from "../utils/catchAsync.js";
 import AppError from "../utils/appError.js";
 import mongoose from "mongoose";
 
+// Generate Unique Order Number
+const generateOrderNumber = async () => {
+  // You can customize this logic to suit your specific needs
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const milliseconds = date.getMilliseconds();
+
+  // Constructing order number string
+  let orderNumber = `ORD-${year}${month}${day}-${milliseconds}`;
+
+  // Check if orderNumber already exists
+  let orderExists = await Order.findOne({ orderNumber });
+
+  // If orderNumber already exists, regenerate
+  while (orderExists) {
+    orderNumber = `ORD-${year}${month}${day}-${milliseconds}`;
+    orderExists = await Order.findOne({ orderNumber });
+  }
+
+  return orderNumber;
+};
+
 export const getCheckoutSession = catchAsync(async (req, res, next) => {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY.trim());
 
@@ -60,30 +84,29 @@ export const getCheckoutSession = catchAsync(async (req, res, next) => {
     };
   });
 
+  // Generate the Order Number
+  const orderNumber = await generateOrderNumber();
+
   const newOrder = await Order.create({
     user: req.user.id,
     items: orderItems,
     total: total,
     orderStatus: "pending",
+    orderNumber,
   });
-
-  console.log(newOrder._id.toString(), "new order");
 
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
-    // have the success url go to the orders page
     success_url: `http://localhost:3001/`,
     cancel_url: `http://localhost:3001/cart`,
     customer_email: req.user.email,
-    client_reference_id: newOrder._id.toString(), // You can adjust this or leave it out if not needed
+    client_reference_id: newOrder._id.toString(),
     line_items: line_items,
-    mode: "payment", // Adding the mode here
+    mode: "payment",
+    shipping_address_collection: {
+      allowed_countries: ["US", "CA"],
+    },
   });
-
-  console.log(session, "session");
-
-  // Save the order to your database (without marking as paid), if desired.
-  // After successful payment via Stripe, you can update the order status.
 
   res.status(200).json({
     status: "success",

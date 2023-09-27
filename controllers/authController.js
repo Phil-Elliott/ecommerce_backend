@@ -221,13 +221,18 @@ export const updatePassword = catchAsync(async (req, res, next) => {
   // Get user from collection
   const user = await User.findById(req.user.id).select("+password");
 
+  // Check if the user is a demo user
+  if (user.email === "user@gmail.com") {
+    return next(new AppError("Demo account password cannot be changed", 403)); // 403 Forbidden
+  }
+
   // Check if posted current password is correct
-  if (!(await user.correctPassword(req.body.passwordCurrent, user.password))) {
+  if (!(await user.correctPassword(req.body.currentPassword, user.password))) {
     return next(new AppError("Your current password is wrong", 401));
   }
 
   // If so, update password
-  user.password = req.body.password;
+  user.password = req.body.newPassword;
   user.passwordConfirm = req.body.passwordConfirm;
   await user.save();
 

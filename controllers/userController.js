@@ -76,6 +76,14 @@ export const updateMe = catchAsync(async (req, res, next) => {
 export const deleteMe = catchAsync(async (req, res, next) => {
   console.log("deleteMe");
 
+  // Check if the user is a demo account
+  if (req.user.email === "user@gmail.com") {
+    return res.status(403).json({
+      status: "fail",
+      message: "Deletion of demo account is not allowed",
+    });
+  }
+
   await User.findByIdAndUpdate(req.user.id, { active: false });
 
   res.status(204).json({

@@ -168,7 +168,6 @@ export function getAll(Model) {
     }
 
     // Create a separate query to get the total count of all products
-    console.log(filter);
     const totalProductsQuery = Model.find(filter);
 
     const features = new APIFeatures(Model, filter, req.query)
@@ -176,7 +175,6 @@ export function getAll(Model) {
       .limitFields()
       .paginate();
 
-    console.log(features);
     // Execute both queries in parallel
     const [docs, totalProducts] = await Promise.all([
       features.query,
