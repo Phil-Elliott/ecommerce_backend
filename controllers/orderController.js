@@ -1,7 +1,7 @@
 import Stripe from "stripe";
 import Order from "../models/orderModel.js";
-import User from "../models/userModel.js";
 import Game from "../models/gameModel.js";
+import Cart from "../models/cartModel.js";
 import { catchAsync } from "../utils/catchAsync.js";
 import AppError from "../utils/appError.js";
 import mongoose from "mongoose";
@@ -66,7 +66,7 @@ export const getCheckoutSession = catchAsync(async (req, res, next) => {
           description: product.description,
           // images: [`https://www.gaming-ecommerce.com/img/games/${product.image}`],
         },
-        unit_amount: Math.round(product.price * 100), // Use Math.round to ensure you have an integer value
+        unit_amount: Math.round(product.price * 100),
       },
       quantity: quantity,
     });
@@ -114,24 +114,12 @@ export const getCheckoutSession = catchAsync(async (req, res, next) => {
   });
 });
 
-// const createOrderCheckout = async (event) => {
-//   const session = event.data.object;
-//   const id = new mongoose.Types.ObjectId(session.client_reference_id);
-
-//   try {
-//     const newOrder = await Order.findByIdAndUpdate(id, {
-//       orderStatus: "paid",
-//     });
-//   } catch (error) {
-//     console.log("Error fetching order:", error.message);
-//   }
-// };
-
 const createOrderCheckout = async (event) => {
   const session = event.data.object;
   const id = new mongoose.Types.ObjectId(session.client_reference_id);
 
   try {
+    // Update order with paid status and shipping details
     const shippingDetails = {
       addressLine1: session.shipping.address.line1,
       addressLine2: session.shipping.address.line2,
@@ -142,14 +130,27 @@ const createOrderCheckout = async (event) => {
       contactName: session.shipping.name,
     };
 
-    const newOrder = await Order.findByIdAndUpdate(id, {
-      orderStatus: "paid",
-      shippingDetails: shippingDetails,
-    });
+    const updatedOrder = await Order.findByIdAndUpdate(
+      id,
+      {
+        orderStatus: "paid",
+        shippingDetails: shippingDetails,
+      },
+      { new: true }
+    );
 
-    console.log(newOrder, "new order");
+    if (updatedOrder) {
+      // Find the user's cart and empty it
+      const userCart = await Cart.findOne({ user: updatedOrder.user });
+      if (userCart) {
+        userCart.items = []; // Empty the items array
+        await userCart.save(); // Save the updated cart
+      }
+    }
+
+    console.log(updatedOrder, "Updated order");
   } catch (error) {
-    console.log("Error fetching order:", error.message);
+    console.log("Error updating order or clearing cart:", error.message);
   }
 };
 
