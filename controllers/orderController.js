@@ -114,14 +114,40 @@ export const getCheckoutSession = catchAsync(async (req, res, next) => {
   });
 });
 
+// const createOrderCheckout = async (event) => {
+//   const session = event.data.object;
+//   const id = new mongoose.Types.ObjectId(session.client_reference_id);
+
+//   try {
+//     const newOrder = await Order.findByIdAndUpdate(id, {
+//       orderStatus: "paid",
+//     });
+//   } catch (error) {
+//     console.log("Error fetching order:", error.message);
+//   }
+// };
+
 const createOrderCheckout = async (event) => {
   const session = event.data.object;
   const id = new mongoose.Types.ObjectId(session.client_reference_id);
 
   try {
+    const shippingDetails = {
+      addressLine1: session.shipping.address.line1,
+      addressLine2: session.shipping.address.line2,
+      city: session.shipping.address.city,
+      state: session.shipping.address.state,
+      country: session.shipping.address.country,
+      postalCode: session.shipping.address.postal_code,
+      contactName: session.shipping.name,
+    };
+
     const newOrder = await Order.findByIdAndUpdate(id, {
       orderStatus: "paid",
+      shippingDetails: shippingDetails,
     });
+
+    console.log(newOrder, "new order");
   } catch (error) {
     console.log("Error fetching order:", error.message);
   }
