@@ -89,27 +89,3 @@ app.use((err, req, res, next) => {
 });
 
 export default app;
-
-/*
-
-1) Create a review component
-2) Allow user to create reviews
-3) Add a badge to the cart icon to display number of items
-4) Maybe route the user to the cart page when they add an item to the cart and same with wishlist
-
-
-4) Fix all auth stuff
-5) Work on displaying reviews on frontend (might need to aggregate data in backend to show total score and number of reviews)
-7) Work on order controller and test (maybe watch tutorial for this) and see what needs to be done with stripe
-
-
-Start working on admings view
-- maybe aggregate data for dashboard
-- show orders
-- show out of stock
-- show items in peoples carts and wishlists
-
-
-could add deals later
-
-*/
