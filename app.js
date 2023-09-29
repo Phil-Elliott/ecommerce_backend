@@ -60,7 +60,7 @@ app.use(cookieParser());
 
 // Enable CORS
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: "https://ecommerce-seven-opal-44.vercel.app",
   credentials: true,
 };
 
