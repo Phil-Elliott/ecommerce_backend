@@ -97,8 +97,8 @@ export const getCheckoutSession = catchAsync(async (req, res, next) => {
 
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
-    success_url: `http://localhost:3001/`,
-    cancel_url: `http://localhost:3001/cart`,
+    success_url: `https://ecommerce-seven-opal-44.vercel.app/orders`,
+    cancel_url: `https://ecommerce-seven-opal-44.vercel.app/`,
     customer_email: req.user.email,
     client_reference_id: newOrder._id.toString(),
     line_items: line_items,
